@@ -12,6 +12,12 @@ using MessageBox = System.Windows.MessageBox;
 
 namespace Ink_Canvas {
     public partial class MainWindow : Window {
+        private bool isVideoBoothVisible = false;
+        private MediaElement videoBooth = null;
+        private ComboBox cameraSelection = null;
+        private Button rotateLeftButton = null;
+        private Button rotateRightButton = null;
+        
         #region Window Initialization
 
         public MainWindow() {
@@ -21,6 +27,18 @@ namespace Ink_Canvas {
             */
             InitializeComponent();
 
+            // 初始化视频展台控件
+            videoBooth = (MediaElement)FindName("VideoBooth");
+            cameraSelection = (ComboBox)FindName("CameraSelection");
+            rotateLeftButton = (Button)FindName("RotateLeft");
+            rotateRightButton = (Button)FindName("RotateRight");
+
+            // 填充摄像头选择列表
+            PopulateCameraSelection();
+
+            // 隐藏视频展台
+            VideoBoothGrid.Visibility = Visibility.Collapsed;
+            
             BlackboardLeftSide.Visibility = Visibility.Collapsed;
             BlackboardCenterSide.Visibility = Visibility.Collapsed;
             BlackboardRightSide.Visibility = Visibility.Collapsed;
@@ -143,7 +161,37 @@ namespace Ink_Canvas {
             }
             if (inkCanvas1.EditingMode == InkCanvasEditingMode.Ink) forcePointEraser = !forcePointEraser;
         }
+        private void PopulateCameraSelection()
+        {
+            // 这里添加摄像头选择逻辑
+        }
 
+        private void OnVideoBoothButtonClick(object sender, RoutedEventArgs e)
+        {
+            isVideoBoothVisible = !isVideoBoothVisible;
+            VideoBoothGrid.Visibility = isVideoBoothVisible ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void FreezeScreen(object sender, RoutedEventArgs e)
+        {
+            // 冻结屏幕逻辑
+        }
+
+        private void OnCameraSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // 切换摄像头逻辑
+        }
+
+        private void RotateLeft(object sender, RoutedEventArgs e)
+        {
+            // 左旋转90度逻辑
+        }
+
+        private void RotateRight(object sender, RoutedEventArgs e)
+        {
+            // 右旋转90度逻辑
+        }
+        
         #endregion Ink Canvas
 
         #region Definations and Loading
