@@ -355,6 +355,18 @@
                                            VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="12" />
                             </Grid>
                         </Border>
+                        <!-- 视频展台按钮 -->
+                        <Border Margin="5,0,0,0" Width="55" Height="55" MouseDown="OnVideoBoothButtonClick"
+                                CornerRadius="5" Background="{DynamicResource BoardBarBackground}" BorderThickness="1"
+                                BorderBrush="{DynamicResource BoardBarBorderBrush}">
+                            <Grid Margin="5">
+                                <ui:FontIcon Height="26" Width="26" VerticalAlignment="Top" FontSize="24"
+                                             FontFamily="{StaticResource FluentIconFontFamily}" Glyph="&#xe8a7;"
+                                             Foreground="{DynamicResource BoardBarForeground}" />
+                                <TextBlock Text="视频展台" Foreground="{DynamicResource BoardBarForeground}"
+                                           VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="12" />
+                            </Grid>
+                        </Border>
                     </ui:SimpleStackPanel>
                 </Grid>
             </Viewbox>
