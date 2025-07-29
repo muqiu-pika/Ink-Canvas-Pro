@@ -1,0 +1,410 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{0E249487-726D-ABA5-939B-C23418DB2B7E}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>ConsoleApplication</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>Ink_Canvas_Pro</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".gitignore" />
+    <Content Include="Images\Ink Canvas Artistry.png" />
+    <Content Include="Images\Screenshot1.png" />
+    <Content Include="Images\Screenshot2.png" />
+    <Content Include="Images\Screenshot3.png" />
+    <Content Include="Ink Canvas\bin\Debug\IACore.dll" />
+    <Content Include="Ink Canvas\bin\Debug\IALoader.dll" />
+    <Content Include="Ink Canvas\bin\Debug\IAWinFX.dll" />
+    <Content Include="Ink Canvas\bin\Debug\Ink Canvas Artistry.exe" />
+    <Content Include="Ink Canvas\bin\Debug\Ink Canvas Artistry.pdb" />
+    <Content Include="Ink Canvas\bin\Debug\iNKORE.UI.WPF.dll" />
+    <Content Include="Ink Canvas\bin\Debug\iNKORE.UI.WPF.Modern.Controls.dll" />
+    <Content Include="Ink Canvas\bin\Debug\iNKORE.UI.WPF.Modern.dll" />
+    <Content Include="Ink Canvas\bin\Debug\Log.txt" />
+    <Content Include="Ink Canvas\bin\Debug\Microsoft.Office.Interop.PowerPoint.dll" />
+    <Content Include="Ink Canvas\bin\Debug\Newtonsoft.Json.dll" />
+    <Content Include="Ink Canvas\bin\Debug\Office.dll" />
+    <Content Include="Ink Canvas\bin\Debug\OSVersionExt.dll" />
+    <Content Include="Ink Canvas\bin\Debug\System.ValueTuple.dll" />
+    <Content Include="Ink Canvas\IACore.dll" />
+    <Content Include="Ink Canvas\IALoader.dll" />
+    <Content Include="Ink Canvas\IAWinFX.dll" />
+    <Content Include="Ink Canvas\Ink Canvas.csproj.user" />
+    <Content Include="Ink Canvas\obj\Debug\Ink Canvas Artistry.exe" />
+    <Content Include="Ink Canvas\obj\Debug\Ink Canvas Artistry.pdb" />
+    <Content Include="Ink Canvas\obj\Debug\Ink Canvas.csproj.FileListAbsolute.txt" />
+    <Content Include="Ink Canvas\obj\Debug\Interop.IWshRuntimeLibrary.dll" />
+    <Content Include="Ink Canvas\Resources\DeveloperAvatars\ChangSakura.png" />
+    <Content Include="Ink Canvas\Resources\DeveloperAvatars\clover-yan.png" />
+    <Content Include="Ink Canvas\Resources\DeveloperAvatars\CN-Ironegg.jpg" />
+    <Content Include="Ink Canvas\Resources\DeveloperAvatars\jiajiaxd.jpg" />
+    <Content Include="Ink Canvas\Resources\DeveloperAvatars\kengwang.png" />
+    <Content Include="Ink Canvas\Resources\DeveloperAvatars\Raspberry-Monster.jpg" />
+    <Content Include="Ink Canvas\Resources\DeveloperAvatars\STBBRD.png" />
+    <Content Include="Ink Canvas\Resources\DeveloperAvatars\WXRIW.png" />
+    <Content Include="Ink Canvas\Resources\Icons-png\check-box-background.png" />
+    <Content Include="Ink Canvas\Resources\Icons-png\checked-black.png" />
+    <Content Include="Ink Canvas\Resources\Icons-png\checked-white.png" />
+    <Content Include="Ink Canvas\Resources\Icons-png\Desmos.png" />
+    <Content Include="Ink Canvas\Resources\Icons-png\EasiCamera.png" />
+    <Content Include="Ink Canvas\Resources\Icons-png\penUpright.png" />
+    <Content Include="Ink Canvas\Resources\Icons\DrawShapeIcon.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\Flip.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\Rotate.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\Rotate45.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\Rotate90.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeArrowLine.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeCircle.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeCone.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeCoordinate1.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeCoordinate2.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeCoordinate3.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeCoordinate4.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeCoordinate5.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeCuboid.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeCylinder.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeDashedCircle.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeDashedLine.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeDotLine.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeEllipse.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeEllipseCenter.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeEllipseCenterWithFocalPoint.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeHyperbola.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeHyperbolaWithFocalPoint.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeLine.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeParabola.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeParabolaWithFocalPoint.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeParallelLine.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeRectangle.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeRectangleCenter.svg" />
+    <Content Include="Ink Canvas\Resources\Icons\ShapeTetrahedron.svg" />
+    <Content Include="Ink Canvas\Resources\Ink Canvas Artistry.ico" />
+    <Content Include="Ink Canvas\Resources\TimerDownNotice.wav" />
+    <Content Include="privacy.txt" />
+    <Content Include="update_server\server.py" />
+    <Content Include="update_server\version.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".github\FUNDING.yml" />
+    <None Include=".github\ISSUE_TEMPLATE\bug_report.md" />
+    <None Include=".github\ISSUE_TEMPLATE\feature_request.md" />
+    <None Include=".github\workflows\dotnet-desktop.yml" />
+    <None Include=".vs\Ink Canvas\DesignTimeBuild\.dtbcache.v2" />
+    <None Include=".vs\Ink Canvas\FileContentIndex\287e35ee-7a6c-48e2-8dec-7b7414f2090a.vsidx" />
+    <None Include=".vs\Ink Canvas\FileContentIndex\2fb5037f-5e2f-428a-aefa-26f29910b355.vsidx" />
+    <None Include=".vs\Ink Canvas\v17\.futdcache.v2" />
+    <None Include=".vs\Ink Canvas\v17\.suo" />
+    <None Include=".vs\Ink Canvas\v17\DocumentLayout.backup.json" />
+    <None Include=".vs\Ink Canvas\v17\DocumentLayout.json" />
+    <None Include=".vs\ProjectEvaluation\ink canvas.metadata.v9.bin" />
+    <None Include=".vs\ProjectEvaluation\ink canvas.projects.v9.bin" />
+    <None Include=".vs\ProjectEvaluation\ink canvas.strings.v9.bin" />
+    <None Include="Ink Canvas\.vs\Ink Canvas.csproj.dtbcache.json" />
+    <None Include="Ink Canvas\App.config" />
+    <None Include="Ink Canvas\app.manifest" />
+    <None Include="Ink Canvas\bin\Debug\Ink Canvas Artistry.exe.config" />
+    <None Include="Ink Canvas\bin\Debug\Settings.json" />
+    <None Include="Ink Canvas\Ink Canvas.csproj" />
+    <None Include="Ink Canvas\obj\Debug\App.baml" />
+    <None Include="Ink Canvas\obj\Debug\Ink Canvas Artistry.exe.config" />
+    <None Include="Ink Canvas\obj\Debug\Ink Canvas Artistry.exe.withSupportedRuntime.config" />
+    <None Include="Ink Canvas\obj\Debug\Ink Canvas Artistry_MarkupCompile.cache" />
+    <None Include="Ink Canvas\obj\Debug\Ink Canvas Artistry_MarkupCompile.i.cache" />
+    <None Include="Ink Canvas\obj\Debug\Ink Canvas Artistry_MarkupCompile.i.lref" />
+    <None Include="Ink Canvas\obj\Debug\Ink Canvas Artistry_MarkupCompile.lref" />
+    <None Include="Ink Canvas\obj\Debug\Ink Canvas.assets.cache" />
+    <None Include="Ink Canvas\obj\Debug\Ink Canvas.csproj.AssemblyReference.cache" />
+    <None Include="Ink Canvas\obj\Debug\Ink Canvas.csproj.BuildWithSkipAnalyzers" />
+    <None Include="Ink Canvas\obj\Debug\Ink Canvas.csproj.CoreCompileInputs.cache" />
+    <None Include="Ink Canvas\obj\Debug\Ink Canvas.csproj.GenerateResource.cache" />
+    <None Include="Ink Canvas\obj\Debug\Ink Canvas.csproj.ResolveComReference.cache" />
+    <None Include="Ink Canvas\obj\Debug\Ink Canvas.csproj.Up2Date" />
+    <None Include="Ink Canvas\obj\Debug\Ink Canvas.GeneratedMSBuildEditorConfig.editorconfig" />
+    <None Include="Ink Canvas\obj\Debug\MainWindow.baml" />
+    <None Include="Ink Canvas\obj\Debug\Resources\BoardDrawShapeImageDictionary.baml" />
+    <None Include="Ink Canvas\obj\Debug\Resources\DrawShapeImageDictionary.baml" />
+    <None Include="Ink Canvas\obj\Debug\Resources\IconImageDictionary.baml" />
+    <None Include="Ink Canvas\obj\Debug\Resources\Styles\Dark-Board.baml" />
+    <None Include="Ink Canvas\obj\Debug\Resources\Styles\Dark-PopupWindow.baml" />
+    <None Include="Ink Canvas\obj\Debug\Resources\Styles\Dark.baml" />
+    <None Include="Ink Canvas\obj\Debug\Resources\Styles\Light-Board.baml" />
+    <None Include="Ink Canvas\obj\Debug\Resources\Styles\Light-PopupWindow.baml" />
+    <None Include="Ink Canvas\obj\Debug\Resources\Styles\Light.baml" />
+    <None Include="Ink Canvas\obj\Debug\Windows\ChangeLogWindow.baml" />
+    <None Include="Ink Canvas\obj\Debug\Windows\CountdownTimerWindow.baml" />
+    <None Include="Ink Canvas\obj\Debug\Windows\CycleProcessBar.baml" />
+    <None Include="Ink Canvas\obj\Debug\Windows\NamesInputWindow.baml" />
+    <None Include="Ink Canvas\obj\Debug\Windows\OperatingGuideWindow.baml" />
+    <None Include="Ink Canvas\obj\Debug\Windows\RandWindow.baml" />
+    <None Include="Ink Canvas\obj\Debug\Windows\YesOrNoNotificationWindow.baml" />
+    <None Include="Ink Canvas\obj\Ink Canvas.csproj.nuget.dgspec.json" />
+    <None Include="Ink Canvas\obj\Ink Canvas.csproj.nuget.g.props" />
+    <None Include="Ink Canvas\obj\Ink Canvas.csproj.nuget.g.targets" />
+    <None Include="Ink Canvas\obj\Ink Canvas_dzf5id2t_wpftmp.csproj.nuget.dgspec.json" />
+    <None Include="Ink Canvas\obj\Ink Canvas_dzf5id2t_wpftmp.csproj.nuget.g.props" />
+    <None Include="Ink Canvas\obj\Ink Canvas_dzf5id2t_wpftmp.csproj.nuget.g.targets" />
+    <None Include="Ink Canvas\obj\Ink Canvas_hmto20b3_wpftmp.csproj.nuget.dgspec.json" />
+    <None Include="Ink Canvas\obj\Ink Canvas_hmto20b3_wpftmp.csproj.nuget.g.props" />
+    <None Include="Ink Canvas\obj\Ink Canvas_hmto20b3_wpftmp.csproj.nuget.g.targets" />
+    <None Include="Ink Canvas\obj\Ink Canvas_hn332bfw_wpftmp.csproj.nuget.dgspec.json" />
+    <None Include="Ink Canvas\obj\Ink Canvas_hn332bfw_wpftmp.csproj.nuget.g.props" />
+    <None Include="Ink Canvas\obj\Ink Canvas_hn332bfw_wpftmp.csproj.nuget.g.targets" />
+    <None Include="Ink Canvas\obj\Ink Canvas_i03eceov_wpftmp.csproj.nuget.dgspec.json" />
+    <None Include="Ink Canvas\obj\Ink Canvas_i03eceov_wpftmp.csproj.nuget.g.props" />
+    <None Include="Ink Canvas\obj\Ink Canvas_i03eceov_wpftmp.csproj.nuget.g.targets" />
+    <None Include="Ink Canvas\obj\Ink Canvas_mm5gfnjg_wpftmp.csproj.nuget.dgspec.json" />
+    <None Include="Ink Canvas\obj\Ink Canvas_mm5gfnjg_wpftmp.csproj.nuget.g.props" />
+    <None Include="Ink Canvas\obj\Ink Canvas_mm5gfnjg_wpftmp.csproj.nuget.g.targets" />
+    <None Include="Ink Canvas\obj\Ink Canvas_vt5es1hz_wpftmp.csproj.nuget.dgspec.json" />
+    <None Include="Ink Canvas\obj\Ink Canvas_vt5es1hz_wpftmp.csproj.nuget.g.props" />
+    <None Include="Ink Canvas\obj\Ink Canvas_vt5es1hz_wpftmp.csproj.nuget.g.targets" />
+    <None Include="Ink Canvas\obj\project.assets.json" />
+    <None Include="Ink Canvas\obj\project.nuget.cache" />
+    <None Include="Ink Canvas\Properties\Settings.settings" />
+    <None Include="Ink Canvas\Resources\Icons\DrawShapeIcon.ai" />
+    <None Include="Ink Canvas\Resources\Icons\Flip.ai" />
+    <None Include="Ink Canvas\Resources\Icons\Rotate.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeArrowLine.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeCircle.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeCone.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeCoordinate1.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeCoordinate2.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeCoordinate3.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeCoordinate4.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeCoordinate5.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeCuboid.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeCylinder.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeDashedCircle.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeDashedLine.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeDotLine.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeEllipse.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeEllipseCenter.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeEllipseCenterWithFocalPoint.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeHyperbola.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeHyperbolaWithFocalPoint.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeLine.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeParabola.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeParabolaWithFocalPoint.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeParallelLine.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeRectangle.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeRectangleCenter.ai" />
+    <None Include="Ink Canvas\Resources\Icons\ShapeTetrahedron.ai" />
+    <None Include="Ink Canvas\Resources\Segoe Fluent Icons.ttf" />
+    <None Include="LICENSE" />
+    <None Include="Manual.md" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Ink Canvas\App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Ink Canvas\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Ink Canvas\Resources\BoardDrawShapeImageDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Ink Canvas\Resources\DrawShapeImageDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Ink Canvas\Resources\IconImageDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Ink Canvas\Resources\Styles\Dark-Board.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Ink Canvas\Resources\Styles\Dark-PopupWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Ink Canvas\Resources\Styles\Dark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Ink Canvas\Resources\Styles\Light-Board.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Ink Canvas\Resources\Styles\Light-PopupWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Ink Canvas\Resources\Styles\Light.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Ink Canvas\Windows\ChangeLogWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Ink Canvas\Windows\CountdownTimerWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Ink Canvas\Windows\CycleProcessBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Ink Canvas\Windows\NamesInputWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Ink Canvas\Windows\OperatingGuideWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Ink Canvas\Windows\RandWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Ink Canvas\Windows\YesOrNoNotificationWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Ink Canvas\App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ink Canvas\Helpers\AnimationsHelper.cs" />
+    <Compile Include="Ink Canvas\Helpers\AutoUpdateHelper.cs" />
+    <Compile Include="Ink Canvas\Helpers\DelAutoSavedFiles.cs" />
+    <Compile Include="Ink Canvas\Helpers\EdgeGestureUtil.cs" />
+    <Compile Include="Ink Canvas\Helpers\ForegroundWindowInfo.cs" />
+    <Compile Include="Ink Canvas\Helpers\Hotkey.cs" />
+    <Compile Include="Ink Canvas\Helpers\InkCanvasElementsHelper.cs" />
+    <Compile Include="Ink Canvas\Helpers\InkRecognizeHelper.cs" />
+    <Compile Include="Ink Canvas\Helpers\LineRecognitionHelper.cs" />
+    <Compile Include="Ink Canvas\Helpers\LogHelper.cs" />
+    <Compile Include="Ink Canvas\Helpers\MultiTouchInput.cs" />
+    <Compile Include="Ink Canvas\Helpers\SoftwareLauncher.cs" />
+    <Compile Include="Ink Canvas\Helpers\TimeMachine.cs" />
+    <Compile Include="Ink Canvas\Helpers\WinTabWindowsChecker.cs" />
+    <Compile Include="Ink Canvas\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_AutoFold.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_AutoStart.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_AutoTheme.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_AutoUpdate.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_BoardControls.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_BoardIcons.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_ElementsControls.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_FloatBarIcons.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_Hotkeys.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_MatrixTransform.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_Notification.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_PenColors.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_PenHighlighterColors.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_PPT.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_Save&amp;OpenStrokes.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_Screenshot.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_SelectionGestures.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_Settings.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_SettingsToLoad.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_ShapeDrawing.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_SimulatePressure&amp;InkToShape.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_TimeMachine.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_Timer.cs" />
+    <Compile Include="Ink Canvas\MainWindow_cs\MW_TouchEvents.cs" />
+    <Compile Include="Ink Canvas\obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
+    <Compile Include="Ink Canvas\obj\Debug\App.g.cs" />
+    <Compile Include="Ink Canvas\obj\Debug\App.g.i.cs" />
+    <Compile Include="Ink Canvas\obj\Debug\GeneratedInternalTypeHelper.g.cs" />
+    <Compile Include="Ink Canvas\obj\Debug\GeneratedInternalTypeHelper.g.i.cs" />
+    <Compile Include="Ink Canvas\obj\Debug\MainWindow.g.cs" />
+    <Compile Include="Ink Canvas\obj\Debug\MainWindow.g.i.cs" />
+    <Compile Include="Ink Canvas\obj\Debug\Windows\ChangeLogWindow.g.cs" />
+    <Compile Include="Ink Canvas\obj\Debug\Windows\ChangeLogWindow.g.i.cs" />
+    <Compile Include="Ink Canvas\obj\Debug\Windows\CountdownTimerWindow.g.cs" />
+    <Compile Include="Ink Canvas\obj\Debug\Windows\CountdownTimerWindow.g.i.cs" />
+    <Compile Include="Ink Canvas\obj\Debug\Windows\CycleProcessBar.g.cs" />
+    <Compile Include="Ink Canvas\obj\Debug\Windows\CycleProcessBar.g.i.cs" />
+    <Compile Include="Ink Canvas\obj\Debug\Windows\NamesInputWindow.g.cs" />
+    <Compile Include="Ink Canvas\obj\Debug\Windows\NamesInputWindow.g.i.cs" />
+    <Compile Include="Ink Canvas\obj\Debug\Windows\OperatingGuideWindow.g.cs" />
+    <Compile Include="Ink Canvas\obj\Debug\Windows\OperatingGuideWindow.g.i.cs" />
+    <Compile Include="Ink Canvas\obj\Debug\Windows\RandWindow.g.cs" />
+    <Compile Include="Ink Canvas\obj\Debug\Windows\RandWindow.g.i.cs" />
+    <Compile Include="Ink Canvas\obj\Debug\Windows\YesOrNoNotificationWindow.g.cs" />
+    <Compile Include="Ink Canvas\obj\Debug\Windows\YesOrNoNotificationWindow.g.i.cs" />
+    <Compile Include="Ink Canvas\Properties\AssemblyInfo.cs" />
+    <Compile Include="Ink Canvas\Properties\Resources.Designer.cs" />
+    <Compile Include="Ink Canvas\Properties\Settings.Designer.cs" />
+    <Compile Include="Ink Canvas\Resources\Settings.cs" />
+    <Compile Include="Ink Canvas\Windows\ChangeLogWindow.xaml.cs">
+      <DependentUpon>ChangeLogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ink Canvas\Windows\CountdownTimerWindow.xaml.cs">
+      <DependentUpon>CountdownTimerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ink Canvas\Windows\CycleProcessBar.xaml.cs">
+      <DependentUpon>CycleProcessBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ink Canvas\Windows\NamesInputWindow.xaml.cs">
+      <DependentUpon>NamesInputWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ink Canvas\Windows\OperatingGuideWindow.xaml.cs">
+      <DependentUpon>OperatingGuideWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ink Canvas\Windows\RandWindow.xaml.cs">
+      <DependentUpon>RandWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ink Canvas\Windows\YesOrNoNotificationWindow.xaml.cs">
+      <DependentUpon>YesOrNoNotificationWindow.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Ink Canvas\obj\Debug\Ink Canvas Artistry.g.resources" />
+    <EmbeddedResource Include="Ink Canvas\obj\Debug\Ink_Canvas.Properties.Resources.resources" />
+    <EmbeddedResource Include="Ink Canvas\Properties\Resources.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".vs\Ink-Canvas-Pro\v17\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>
