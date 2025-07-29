@@ -1,4 +1,4 @@
-﻿using Ink_Canvas.Helpers;
+using Ink_Canvas.Helpers;
 using System.Windows;
 
 namespace Ink_Canvas
@@ -19,8 +19,8 @@ namespace Ink_Canvas
                     if (!Settings.Startup.IsAutoUpdateWithSilence)
                     {
                         MessageBoxResult result = MessageBox.Show(
-                            $"Ink Canvas Artistry 新版本 (v{AvailableLatestVersion}) 安装包已下载完成，是否立即更新？",
-                            "Ink Canvas Artistry - 新版本可用",
+                            $"Ink Canvas Pro 新版本 (v{AvailableLatestVersion}) 安装包已下载完成，是否立即更新？",
+                            "Ink Canvas Pro - 新版本可用",
                             MessageBoxButton.YesNo,
                             MessageBoxImage.Question);
 

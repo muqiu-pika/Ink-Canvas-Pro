@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
@@ -85,7 +85,7 @@ namespace Ink_Canvas.Helpers
             }
         }
 
-        private static string updatesFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Ink Canvas Artistry", "AutoUpdate");
+        private static string updatesFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Ink Canvas Pro", "AutoUpdate");
         private static string statusFilePath = null;
 
         public static async Task<bool> DownloadSetupFileAndSaveStatus(string version)
@@ -100,7 +100,7 @@ namespace Ink_Canvas.Helpers
                     return true;
                 }
 
-                string setupFileName = $"Ink.Canvas.Artistry.V{version}.Setup.exe";
+                string setupFileName = $"Ink.Canvas.Pro.V{version}.Setup.exe";
                 string downloadUrl = $"{UpdateServerBaseUrl}/download/{setupFileName}";
                 string destinationPath = Path.Combine(updatesFolderPath, setupFileName);
 

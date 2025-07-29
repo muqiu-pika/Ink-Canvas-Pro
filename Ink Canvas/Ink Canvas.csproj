@@ -4,12 +4,12 @@
 		<RuntimeIdentifiers>win;win-x86;win-x64;win-arm64;win7;win7-x86;win7-x64</RuntimeIdentifiers>
 		<OutputType>WinExe</OutputType>
 		<GenerateAssemblyInfo>False</GenerateAssemblyInfo>
-		<AssemblyName>Ink Canvas Artistry</AssemblyName>
+		<AssemblyName>Ink Canvas Pro</AssemblyName>
 		<UseWindowsForms>true</UseWindowsForms>
 		<UseWPF>true</UseWPF>
 		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-		<ApplicationIcon>Resources\Ink Canvas Artistry.ico</ApplicationIcon>
+		<ApplicationIcon>Resources\Ink Canvas Pro.ico</ApplicationIcon>
 	</PropertyGroup>
 	<PropertyGroup>
 		<IsWebBootstrapper>false</IsWebBootstrapper>
@@ -142,7 +142,7 @@
 		<Resource Include="Resources\DeveloperAvatars\STBBRD.png" />
 		<Resource Include="Resources\DeveloperAvatars\WXRIW.png" />
 		
-		<Resource Include="Resources\Ink Canvas Artistry.ico" />
+		<Resource Include="Resources\Ink Canvas Pro.ico" />
 		<Resource Include="Resources\Segoe Fluent Icons.ttf" />
 		<Resource Include="Resources\Icons-png\check-box-background.png" />
 		<Resource Include="Resources\Icons-png\checked-black.png" />

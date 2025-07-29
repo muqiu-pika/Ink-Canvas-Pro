@@ -52,13 +52,13 @@ namespace Ink_Canvas
             {
                 StartAutomaticallyDel("InkCanvas");
                 StartAutomaticallyDel("Ink Canvas Annotation");
-                StartAutomaticallyCreate("Ink Canvas Artistry");
+                StartAutomaticallyCreate("Ink Canvas Pro");
             }
             else
             {
                 StartAutomaticallyDel("InkCanvas");
                 StartAutomaticallyDel("Ink Canvas Annotation");
-                StartAutomaticallyDel("Ink Canvas Artistry");
+                StartAutomaticallyDel("Ink Canvas Pro");
             }
         }
 
@@ -927,7 +927,7 @@ namespace Ink_Canvas
 
         private void HyperlinkSourceToPresentRepository_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("https://github.com/InkCanvas/Ink-Canvas-Artistry");
+            Process.Start("https://github.com/muqiu-pika/Ink-Canvas-Pro");
             HideSubPanels();
         }
 

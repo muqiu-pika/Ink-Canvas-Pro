@@ -4750,7 +4750,7 @@
                                         <TextBlock
                                             Width="250"
                                             Margin="2,0"
-                                            Text="https://github.com/InkCanvas/Ink-Canvas-Artistry"
+                                            Text="https://github.com/muqiu-pika/Ink-Canvas-Pro"
                                             TextWrapping="Wrap" />
                                     </Hyperlink>
                                 </TextBlock>
