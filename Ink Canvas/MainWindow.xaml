@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     Name="window"
-    Title="Ink Canvas Artistry 画板"
+    Title="Ink Canvas Pro 画板"
     Width="1440"
     Height="5500"
     AllowsTransparency="True"
@@ -4698,7 +4698,7 @@
                                     FontSize="26"
                                     FontWeight="Bold"
                                     Foreground="{DynamicResource SettingsPageForeground}"
-                                    Text="关于 Ink Canvas Artistry" />
+                                    Text="关于 Ink Canvas Pro" />
                             </GroupBox.Header>
                             <ikw:SimpleStackPanel Spacing="5">
                                 <ikw:SimpleStackPanel Orientation="Horizontal">

@@ -10,7 +10,7 @@ VERSION_FILE = 'version.txt'
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-app = FastAPI(title="Ink Canvas Artistry Update Server")
+app = FastAPI(title="Ink Canvas Pro Update Server")
 
 base_dir = os.path.abspath(os.path.dirname(__file__))
 update_dir = os.path.join(base_dir, UPDATE_FOLDER)
