@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using Ink_Canvas.Resources;
 
 namespace Ink_Canvas
 {
@@ -22,6 +23,8 @@ namespace Ink_Canvas
         public Startup Startup { get; set; } = new Startup();
         [JsonProperty("randSettings")]
         public RandSettings RandSettings { get; set; } = new RandSettings();
+        [JsonProperty("performance")]
+        public PerformanceSettings Performance { get; set; } = new PerformanceSettings();
     }
 
     public class Canvas

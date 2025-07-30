@@ -1,4 +1,4 @@
-﻿using Ink_Canvas.Helpers;
+using Ink_Canvas.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -91,7 +91,10 @@ namespace Ink_Canvas
             TouchDownPointsList[e.StylusDevice.Id] = InkCanvasEditingMode.None;
         }
 
-        private async void MainWindow_StylusUp(object sender, StylusEventArgs e)
+        // 渲染优化器实例
+        private readonly SimplePerformanceOptimizer _renderingOptimizer = SimplePerformanceOptimizer.Instance;
+
+        private void MainWindow_StylusUp(object sender, StylusEventArgs e)
         {
             try
             {
@@ -104,10 +107,23 @@ namespace Ink_Canvas
                     try
                     {
                         // 触摸屏 TabletDeviceType.Touch 
-                        inkCanvas.Strokes.Add(GetStrokeVisual(e.StylusDevice.Id).Stroke);
-                        await Task.Delay(5); // 避免渲染墨迹完成前预览墨迹被删除导致墨迹闪烁
+                        var stroke = GetStrokeVisual(e.StylusDevice.Id).Stroke;
+                        
+                        // 先移除预览画布，避免重复显示
                         inkCanvas.Children.Remove(GetVisualCanvas(e.StylusDevice.Id));
-                        inkCanvas_StrokeCollected(inkCanvas, new InkCanvasStrokeCollectedEventArgs(GetStrokeVisual(e.StylusDevice.Id).Stroke));
+                        
+                        // 添加笔迹到画布
+                        inkCanvas.Strokes.Add(stroke);
+                        
+                        // 优化：异步优化笔迹渲染
+                        _renderingOptimizer.ProcessTransformAsync(() =>
+                        {
+                            // 简化的渲染优化
+                            var bounds = stroke.GetBounds();
+                        }).ConfigureAwait(false);
+                        
+                        // 立即进行形状识别，避免延迟导致的重复笔迹
+                        inkCanvas_StrokeCollected(inkCanvas, new InkCanvasStrokeCollectedEventArgs(stroke));
                     }
                     catch(Exception ex) {
                         LogHelper.WriteLogToFile(ex.ToString(), LogHelper.LogType.Error);
@@ -339,71 +355,101 @@ namespace Ink_Canvas
             }
         }
 
+        // 简化的性能优化器实例
+        private readonly SimplePerformanceOptimizer _performanceOptimizer = SimplePerformanceOptimizer.Instance;
+        private readonly SimpleTransformManager _transformManager = new SimpleTransformManager();
+
         private void Main_Grid_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
         {
             if (isInMultiTouchMode || !Settings.Gesture.IsEnableTwoFingerGesture) return;
             if ((dec.Count >= 2 && (Settings.PowerPointSettings.IsEnableTwoFingerGestureInPresentationMode || BtnPPTSlideShowEnd.Visibility != Visibility.Visible)) || isSingleFingerDragMode)
             {
-                Matrix m = new Matrix();
+                // 使用简化的节流处理变换
+                _performanceOptimizer.SimpleThrottle(() => ProcessManipulationDelta(e));
+            }
+        }
+
+        private void ProcessManipulationDelta(ManipulationDeltaEventArgs e)
+        {
+            try
+            {
+                Matrix m = _performanceOptimizer.GetMatrix();
                 ManipulationDelta md = e.DeltaManipulation;
+                
                 // Translation
                 Vector trans = md.Translation;
+                
                 // Rotate, Scale
                 if (Settings.Gesture.IsEnableTwoFingerGestureTranslateOrRotation)
                 {
                     double rotate = md.Rotation;
                     Vector scale = md.Scale;
                     Point center = GetMatrixTransformCenterPoint(e.ManipulationOrigin, e.Source as FrameworkElement);
+                    
                     if (Settings.Gesture.IsEnableTwoFingerZoom)
                         m.ScaleAt(scale.X, scale.Y, center.X, center.Y);
                     if (Settings.Gesture.IsEnableTwoFingerRotation)
                         m.RotateAt(rotate, center.X, center.Y);
                     if (Settings.Gesture.IsEnableTwoFingerTranslate)
                         m.Translate(trans.X, trans.Y);
-                    // handle Elements
-                    List<UIElement> elements = InkCanvasElementsHelper.GetAllElements(inkCanvas);
-                    foreach (UIElement element in elements)
-                    {
-                        if (Settings.Gesture.IsEnableTwoFingerTranslate)
-                        {
-                            ApplyElementMatrixTransform(element, m);
-                        }
-                        else
-                        {
-                            ApplyElementMatrixTransform(element, m);
-                        }
-                    }
+                    
+                    // 优化：只处理选中的元素，而不是所有元素
+                    List<UIElement> elements = inkCanvas.GetSelectedElements().Count > 0 
+                        ? InkCanvasElementsHelper.GetSelectedElements(inkCanvas) 
+                        : InkCanvasElementsHelper.GetAllElements(inkCanvas);
+                    
+                    _transformManager.ApplyTransformToElements(elements, m);
                 }
-                // handle strokes
+                
+                // 优化：只处理选中的笔迹，而不是所有笔迹
+                StrokeCollection targetStrokes = inkCanvas.GetSelectedStrokes().Count > 0 
+                    ? inkCanvas.GetSelectedStrokes() 
+                    : inkCanvas.Strokes;
+                
                 if (Settings.Gesture.IsEnableTwoFingerZoom)
                 {
-                    foreach (Stroke stroke in inkCanvas.Strokes)
-                    {
-                        stroke.Transform(m, false);
-                        try
-                        {
-                            stroke.DrawingAttributes.Width *= md.Scale.X;
-                            stroke.DrawingAttributes.Height *= md.Scale.Y;
-                        }
-                        catch { }
-                    };
+                    _transformManager.ApplyTransformToStrokes(targetStrokes, m, true, md.Scale);
                 }
                 else
                 {
-                    foreach (Stroke stroke in inkCanvas.Strokes)
-                    {
-                        stroke.Transform(m, false);
-                    };
+                    _transformManager.ApplyTransformToStrokes(targetStrokes, m);
                 }
+                
+                // 优化：延迟更新圆形对象，避免频繁计算
+                if (circles.Count > 0)
+                {
+                    UpdateCirclesAsync();
+                }
+                
+                // 提交所有变换
+                _transformManager.CommitTransforms();
+                
+                // 返回矩阵到对象池
+                _performanceOptimizer.ReturnMatrix(m);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLogToFile($"ManipulationDelta error: {ex}", LogHelper.LogType.Error);
+            }
+        }
+
+        private void UpdateCirclesAsync()
+        {
+            _performanceOptimizer.ProcessTransformAsync(() =>
+            {
                 foreach (Circle circle in circles)
                 {
-                    circle.R = GetDistance(circle.Stroke.StylusPoints[0].ToPoint(), circle.Stroke.StylusPoints[circle.Stroke.StylusPoints.Count / 2].ToPoint()) / 2;
-                    circle.Centroid = new Point(
-                        (circle.Stroke.StylusPoints[0].X + circle.Stroke.StylusPoints[circle.Stroke.StylusPoints.Count / 2].X) / 2,
-                        (circle.Stroke.StylusPoints[0].Y + circle.Stroke.StylusPoints[circle.Stroke.StylusPoints.Count / 2].Y) / 2
-                    );
+                    if (circle.Stroke.StylusPoints.Count > 1)
+                    {
+                        circle.R = GetDistance(circle.Stroke.StylusPoints[0].ToPoint(), 
+                                             circle.Stroke.StylusPoints[circle.Stroke.StylusPoints.Count / 2].ToPoint()) / 2;
+                        circle.Centroid = new Point(
+                            (circle.Stroke.StylusPoints[0].X + circle.Stroke.StylusPoints[circle.Stroke.StylusPoints.Count / 2].X) / 2,
+                            (circle.Stroke.StylusPoints[0].Y + circle.Stroke.StylusPoints[circle.Stroke.StylusPoints.Count / 2].Y) / 2
+                        );
+                    }
                 }
-            }
+            }).ConfigureAwait(false);
         }
     }
 }

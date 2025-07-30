@@ -1,4 +1,4 @@
-﻿using Ink_Canvas.Helpers;
+using Ink_Canvas.Helpers;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -321,15 +321,25 @@ namespace Ink_Canvas
             }
         }
 
+        // 简化的性能优化器实例
+        private readonly SimplePerformanceOptimizer _selectionPerformanceOptimizer = SimplePerformanceOptimizer.Instance;
+        private readonly SimpleTransformManager _selectionTransformManager = new SimpleTransformManager();
+
         private void GridInkCanvasSelectionCover_MouseMove(object sender, MouseEventArgs e)
         {
             if (isGridInkCanvasSelectionCoverMouseDown == false) return;
+            
+            // 使用节流控制，避免过于频繁的更新
+            if (!_selectionPerformanceOptimizer.CanProcessUpdate()) return;
+            
             Point mousePoint = e.GetPosition(inkCanvas);
             Vector trans = new Vector(mousePoint.X - lastMousePoint.X, mousePoint.Y - lastMousePoint.Y);
             lastMousePoint = mousePoint;
-            Matrix m = new Matrix();
+            
+            Matrix m = _selectionPerformanceOptimizer.GetMatrix();
             // add Translate
             m.Translate(trans.X, trans.Y);
+            
             // handle UIElement
             List<UIElement> elements = new List<UIElement>();
             if (ElementsSelectionClone.Count != 0)
@@ -340,21 +350,35 @@ namespace Ink_Canvas
             {
                 elements = InkCanvasElementsHelper.GetSelectedElements(inkCanvas);
             }
-            foreach (UIElement element in elements)
-            {
-                ApplyElementMatrixTransform(element, m);
-            }
+            
+            _selectionTransformManager.ApplyTransformToElements(elements, m);
+            
             // handle strokes
             StrokeCollection strokes = inkCanvas.GetSelectedStrokes();
             if (StrokesSelectionClone.Count != 0)
             {
                 strokes = StrokesSelectionClone;
             }
-            foreach (Stroke stroke in strokes)
+            
+            _selectionTransformManager.ApplyTransformToStrokes(strokes, m);
+            _selectionTransformManager.CommitTransforms();
+            
+            // 延迟更新选择框位置，避免频繁计算
+            UpdateSelectionBorderLocationAsync();
+            
+            // 返回矩阵到对象池
+            _selectionPerformanceOptimizer.ReturnMatrix(m);
+        }
+
+        private void UpdateSelectionBorderLocationAsync()
+        {
+            _selectionPerformanceOptimizer.ProcessTransformAsync(() =>
             {
-                stroke.Transform(m, false);
-            }
-            updateBorderStrokeSelectionControlLocation();
+                Dispatcher.Invoke(() =>
+                {
+                    updateBorderStrokeSelectionControlLocation();
+                });
+            }).ConfigureAwait(false);
         }
 
         private void GridInkCanvasSelectionCover_MouseUp(object sender, MouseButtonEventArgs e)
@@ -385,30 +409,28 @@ namespace Ink_Canvas
 
         private void GridInkCanvasSelectionCover_MouseWheel(object sender, MouseWheelEventArgs e)
         {
+            // 使用节流控制，避免过于频繁的缩放
+            if (!_selectionPerformanceOptimizer.CanProcessUpdate()) return;
+            
             double scale = e.Delta > 0 ? 1.1 : 0.9;
             Point center = InkCanvasElementsHelper.GetAllElementsBoundsCenterPoint(inkCanvas);
-            Matrix m = new Matrix();
+            
+            Matrix m = _selectionPerformanceOptimizer.GetMatrix();
             m.ScaleAt(scale, scale, center.X, center.Y);
 
             StrokeCollection strokes = inkCanvas.GetSelectedStrokes();
             List<UIElement> elements = InkCanvasElementsHelper.GetSelectedElements(inkCanvas);
-            // handle UIElement
-            foreach (UIElement element in elements)
-            {
-                ApplyElementMatrixTransform(element, m);
-            }
-            // handle strokes
-            foreach (Stroke stroke in strokes)
-            {
-                stroke.Transform(m, false);
-                try
-                {
-                    stroke.DrawingAttributes.Width *= scale;
-                    stroke.DrawingAttributes.Height *= scale;
-                }
-                catch { }
-            }
-            updateBorderStrokeSelectionControlLocation();
+            
+            // 使用优化的变换管理器
+            _selectionTransformManager.ApplyTransformToElements(elements, m);
+            _selectionTransformManager.ApplyTransformToStrokes(strokes, m, true, new Vector(scale, scale));
+            _selectionTransformManager.CommitTransforms();
+            
+            // 延迟更新选择框位置
+            UpdateSelectionBorderLocationAsync();
+            
+            // 返回矩阵到对象池
+            _selectionPerformanceOptimizer.ReturnMatrix(m);
         }
 
         private void BtnSelect_Click(object sender, RoutedEventArgs e)
@@ -566,55 +588,68 @@ namespace Ink_Canvas
             {
                 if (dec.Count >= 1)
                 {
-                    ManipulationDelta md = e.DeltaManipulation;
-                    Vector trans = md.Translation;
-                    double rotate = md.Rotation;
-                    Vector scale = md.Scale;
-                    Point center = GetMatrixTransformCenterPoint(e.ManipulationOrigin, e.Source as FrameworkElement);
-                    Matrix m = new Matrix();
-                    // add Scale
-                    m.ScaleAt(scale.X, scale.Y, center.X, center.Y);
-                    StrokeCollection strokes = inkCanvas.GetSelectedStrokes();
-                    if (StrokesSelectionClone.Count != 0)
-                    {
-                        strokes = StrokesSelectionClone;
-                    }
-                    else if (Settings.Gesture.IsEnableTwoFingerRotationOnSelection)
-                    {
-                        // add Rotate
-                        m.RotateAt(rotate, center.X, center.Y);
-                    }
-                    // add Translate
-                    m.Translate(trans.X, trans.Y);
-                    List<UIElement> elements = new List<UIElement>();
-                    if (ElementsSelectionClone.Count != 0)
-                    {
-                        elements = ElementsSelectionClone;
-                    }
-                    else
-                    {
-                        elements = InkCanvasElementsHelper.GetSelectedElements(inkCanvas);
-                    }
-                    // handle UIElements
-                    foreach (UIElement element in elements)
-                    {
-                        ApplyElementMatrixTransform(element, m);
-                    }
-                    // handle strokes
-                    foreach (Stroke stroke in strokes)
-                    {
-                        stroke.Transform(m, false);
-                        try
-                        {
-                            stroke.DrawingAttributes.Width *= md.Scale.X;
-                            stroke.DrawingAttributes.Height *= md.Scale.Y;
-                        }
-                        catch { }
-                    }
-                    updateBorderStrokeSelectionControlLocation();
+                    // 使用简化的节流处理变换
+                    _selectionPerformanceOptimizer.SimpleThrottle(() => ProcessSelectionManipulationDelta(e));
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLogToFile($"Selection ManipulationDelta error: {ex}", LogHelper.LogType.Error);
+            }
+        }
+
+        private void ProcessSelectionManipulationDelta(ManipulationDeltaEventArgs e)
+        {
+            try
+            {
+                ManipulationDelta md = e.DeltaManipulation;
+                Vector trans = md.Translation;
+                double rotate = md.Rotation;
+                Vector scale = md.Scale;
+                Point center = GetMatrixTransformCenterPoint(e.ManipulationOrigin, e.Source as FrameworkElement);
+                
+                Matrix m = _selectionPerformanceOptimizer.GetMatrix();
+                // add Scale
+                m.ScaleAt(scale.X, scale.Y, center.X, center.Y);
+                
+                StrokeCollection strokes = inkCanvas.GetSelectedStrokes();
+                if (StrokesSelectionClone.Count != 0)
+                {
+                    strokes = StrokesSelectionClone;
+                }
+                else if (Settings.Gesture.IsEnableTwoFingerRotationOnSelection)
+                {
+                    // add Rotate
+                    m.RotateAt(rotate, center.X, center.Y);
+                }
+                // add Translate
+                m.Translate(trans.X, trans.Y);
+                
+                List<UIElement> elements = new List<UIElement>();
+                if (ElementsSelectionClone.Count != 0)
+                {
+                    elements = ElementsSelectionClone;
+                }
+                else
+                {
+                    elements = InkCanvasElementsHelper.GetSelectedElements(inkCanvas);
+                }
+                
+                // 使用优化的变换管理器
+                _selectionTransformManager.ApplyTransformToElements(elements, m);
+                _selectionTransformManager.ApplyTransformToStrokes(strokes, m, true, md.Scale);
+                _selectionTransformManager.CommitTransforms();
+                
+                // 延迟更新选择框位置
+                UpdateSelectionBorderLocationAsync();
+                
+                // 返回矩阵到对象池
+                _selectionPerformanceOptimizer.ReturnMatrix(m);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLogToFile($"ProcessSelectionManipulationDelta error: {ex}", LogHelper.LogType.Error);
+            }
         }
 
         Point lastTouchPointOnGridInkCanvasCover = new Point(0, 0);

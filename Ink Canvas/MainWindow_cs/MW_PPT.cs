@@ -1,4 +1,4 @@
-﻿using Ink_Canvas.Helpers;
+using Ink_Canvas.Helpers;
 using Microsoft.Office.Interop.PowerPoint;
 using System;
 using System.Diagnostics;

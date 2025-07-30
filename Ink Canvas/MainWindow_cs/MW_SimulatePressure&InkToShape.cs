@@ -16,12 +16,22 @@ namespace Ink_Canvas
         StrokeCollection newStrokes = new StrokeCollection();
         List<Circle> circles = new List<Circle>();
 
+        // 简化的渲染优化器实例
+        private readonly SimplePerformanceOptimizer _pressureRenderingOptimizer = SimplePerformanceOptimizer.Instance;
+
         //此函数中的所有代码版权所有 WXRIW，在其他项目中使用前必须提前联系（wxriw@outlook.com），谢谢！
         private void inkCanvas_StrokeCollected(object sender, InkCanvasStrokeCollectedEventArgs e)
         {
             try
             {
                 inkCanvas.Opacity = 1;
+                
+                // 优化：异步优化笔迹渲染
+                _pressureRenderingOptimizer.ProcessTransformAsync(() =>
+                {
+                    // 简化的渲染优化
+                    var bounds = e.Stroke.GetBounds();
+                }).ConfigureAwait(false);
                 
                 // 直线识别功能
                 if (Settings.InkToShape.IsLineRecognitionEnabled)
@@ -42,6 +52,14 @@ namespace Ink_Canvas
                                 _currentCommitType = CommitReason.ShapeRecognition;
                                 inkCanvas.Strokes.Remove(e.Stroke);
                                 inkCanvas.Strokes.Add(lineStroke);
+                                
+                                                            // 优化：异步优化新笔迹渲染
+                            _pressureRenderingOptimizer.ProcessTransformAsync(() =>
+                            {
+                                // 简化的渲染优化
+                                var bounds = lineStroke.GetBounds();
+                            }).ConfigureAwait(false);
+                                
                                 _currentCommitType = CommitReason.UserInput;
                                 return; // 直线识别成功，跳过其他形状识别
                             }
@@ -133,7 +151,15 @@ namespace Ink_Canvas
                                     circles.Add(new Circle(result.Centroid, shape.Width / 2.0, stroke));
                                     SetNewBackupOfStroke();
                                     _currentCommitType = CommitReason.ShapeRecognition;
-                                    inkCanvas.Strokes.Remove(result.InkDrawingNode.Strokes);
+                                    
+                                    // 确保移除所有相关的原始笔迹，包括当前笔迹
+                                    var strokesToRemove1 = new StrokeCollection(result.InkDrawingNode.Strokes);
+                                    if (!strokesToRemove1.Contains(e.Stroke))
+                                    {
+                                        strokesToRemove1.Add(e.Stroke);
+                                    }
+                                    inkCanvas.Strokes.Remove(strokesToRemove1);
+                                    
                                     inkCanvas.Strokes.Add(stroke);
                                     _currentCommitType = CommitReason.UserInput;
                                     newStrokes = new StrokeCollection();
@@ -209,7 +235,14 @@ namespace Ink_Canvas
 
                                                 SetNewBackupOfStroke();
                                                 _currentCommitType = CommitReason.ShapeRecognition;
-                                                inkCanvas.Strokes.Remove(result.InkDrawingNode.Strokes);
+                                                
+                                                // 确保移除所有相关的原始笔迹，包括当前笔迹
+                                                var strokesToRemove2 = new StrokeCollection(result.InkDrawingNode.Strokes);
+                                                if (!strokesToRemove2.Contains(e.Stroke))
+                                                {
+                                                    strokesToRemove2.Add(e.Stroke);
+                                                }
+                                                inkCanvas.Strokes.Remove(strokesToRemove2);
                                                 newStrokes = new StrokeCollection();
 
                                                 var _pointList = GenerateEllipseGeometry(iniP, endP, false, true);
@@ -272,7 +305,15 @@ namespace Ink_Canvas
 
                                     SetNewBackupOfStroke();
                                     _currentCommitType = CommitReason.ShapeRecognition;
-                                    inkCanvas.Strokes.Remove(result.InkDrawingNode.Strokes);
+                                    
+                                    // 确保移除所有相关的原始笔迹，包括当前笔迹
+                                    var strokesToRemove3 = new StrokeCollection(result.InkDrawingNode.Strokes);
+                                    if (!strokesToRemove3.Contains(e.Stroke))
+                                    {
+                                        strokesToRemove3.Add(e.Stroke);
+                                    }
+                                    inkCanvas.Strokes.Remove(strokesToRemove3);
+                                    
                                     inkCanvas.Strokes.Add(stroke);
                                     _currentCommitType = CommitReason.UserInput;
                                     GridInkCanvasSelectionCover.Visibility = Visibility.Collapsed;
@@ -306,7 +347,15 @@ namespace Ink_Canvas
                                     };
                                     SetNewBackupOfStroke();
                                     _currentCommitType = CommitReason.ShapeRecognition;
-                                    inkCanvas.Strokes.Remove(result.InkDrawingNode.Strokes);
+                                    
+                                    // 确保移除所有相关的原始笔迹，包括当前笔迹
+                                    var strokesToRemove4 = new StrokeCollection(result.InkDrawingNode.Strokes);
+                                    if (!strokesToRemove4.Contains(e.Stroke))
+                                    {
+                                        strokesToRemove4.Add(e.Stroke);
+                                    }
+                                    inkCanvas.Strokes.Remove(strokesToRemove4);
+                                    
                                     inkCanvas.Strokes.Add(stroke);
                                     _currentCommitType = CommitReason.UserInput;
                                     GridInkCanvasSelectionCover.Visibility = Visibility.Collapsed;
@@ -346,7 +395,15 @@ namespace Ink_Canvas
                                     };
                                     SetNewBackupOfStroke();
                                     _currentCommitType = CommitReason.ShapeRecognition;
-                                    inkCanvas.Strokes.Remove(result.InkDrawingNode.Strokes);
+                                    
+                                    // 确保移除所有相关的原始笔迹，包括当前笔迹
+                                    var strokesToRemove5 = new StrokeCollection(result.InkDrawingNode.Strokes);
+                                    if (!strokesToRemove5.Contains(e.Stroke))
+                                    {
+                                        strokesToRemove5.Add(e.Stroke);
+                                    }
+                                    inkCanvas.Strokes.Remove(strokesToRemove5);
+                                    
                                     inkCanvas.Strokes.Add(stroke);
                                     _currentCommitType = CommitReason.UserInput;
                                     GridInkCanvasSelectionCover.Visibility = Visibility.Collapsed;

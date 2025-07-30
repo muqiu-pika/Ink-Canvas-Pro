@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net472</TargetFramework>
+		<LangVersion>8.0</LangVersion>
 		<RuntimeIdentifiers>win;win-x86;win-x64;win-arm64;win7;win7-x86;win7-x64</RuntimeIdentifiers>
 		<OutputType>WinExe</OutputType>
 		<GenerateAssemblyInfo>False</GenerateAssemblyInfo>
@@ -10,6 +11,7 @@
 		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<ApplicationIcon>Resources\Ink Canvas Pro.ico</ApplicationIcon>
+		<PlatformTarget>x86</PlatformTarget>
 	</PropertyGroup>
 	<PropertyGroup>
 		<IsWebBootstrapper>false</IsWebBootstrapper>
@@ -34,27 +36,35 @@
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 	  <Prefer32Bit>True</Prefer32Bit>
+	  <PlatformTarget>x86</PlatformTarget>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	  <Prefer32Bit>True</Prefer32Bit>
+	  <PlatformTarget>x86</PlatformTarget>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
 	  <Prefer32Bit>True</Prefer32Bit>
+	  <PlatformTarget>x86</PlatformTarget>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
 	  <Prefer32Bit>True</Prefer32Bit>
+	  <PlatformTarget>x86</PlatformTarget>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
 	  <Prefer32Bit>True</Prefer32Bit>
+	  <PlatformTarget>x86</PlatformTarget>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
 	  <Prefer32Bit>True</Prefer32Bit>
+	  <PlatformTarget>x86</PlatformTarget>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
 	  <Prefer32Bit>True</Prefer32Bit>
+	  <PlatformTarget>x86</PlatformTarget>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
 	  <Prefer32Bit>True</Prefer32Bit>
+	  <PlatformTarget>x86</PlatformTarget>
 	</PropertyGroup>
 	<ItemGroup>
 		<Reference Include="IACore">

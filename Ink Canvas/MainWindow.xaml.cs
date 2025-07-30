@@ -4,12 +4,14 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Ink;
 using System.Windows.Media;
 using File = System.IO.File;
 using MessageBox = System.Windows.MessageBox;
+using Ink_Canvas.Resources;
 
 namespace Ink_Canvas
 {
@@ -172,6 +174,18 @@ namespace Ink_Canvas
             loadPenCanvas();
             //加载设置
             LoadSettings(true);
+            
+            // 初始化性能管理器
+            try
+            {
+                PerformanceManager.Instance.Initialize(Settings.Performance);
+                LogHelper.WriteLogToFile("Performance Manager initialized", LogHelper.LogType.Info);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLogToFile($"Performance Manager initialization error: {ex}", LogHelper.LogType.Error);
+            }
+            
             if (Environment.Is64BitProcess)
             {
                 GroupBoxInkRecognition.Visibility = Visibility.Collapsed;
@@ -189,6 +203,18 @@ namespace Ink_Canvas
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             LogHelper.WriteLogToFile("Ink Canvas closing", LogHelper.LogType.Event);
+            
+            // 清理性能管理器资源
+            try
+            {
+                PerformanceManager.Instance.Cleanup();
+                LogHelper.WriteLogToFile("Performance Manager cleaned up", LogHelper.LogType.Info);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLogToFile($"Performance Manager cleanup error: {ex}", LogHelper.LogType.Error);
+            }
+            
             if (!CloseIsFromButton && Settings.Advanced.IsSecondConfimeWhenShutdownApp)
             {
                 e.Cancel = true;
