@@ -6985,7 +6985,7 @@
                                 Foreground="{DynamicResource FloatBarForeground}"
                                 Text="手势"
                                 TextAlignment="Center"
-                                Visibility="{Binding ElementName=FloatBarSelectIconTextBlock, Path=Visibility}" />
+                                Visibility="Visible" />
                         </ikw:SimpleStackPanel>
                     </Button>
                 </Border>

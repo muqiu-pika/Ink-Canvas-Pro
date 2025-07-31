@@ -365,6 +365,12 @@ namespace Ink_Canvas
                 //BtnPPTSlideShow.Visibility = Visibility.Collapsed;
                 BtnPPTSlideShowEnd.Visibility = Visibility.Visible;
 
+                // PPT放映开始时更新手势按钮的显示状态
+                if (BorderFloatingBarMainControls.Visibility == Visibility.Visible)
+                {
+                    CheckEnableTwoFingerGestureBtnVisibility(true);
+                }
+
                 if (Settings.Appearance.IsColorfulViewboxFloatingBar)
                 {
                     ViewboxFloatingBar.Opacity = 0.8;
@@ -393,6 +399,9 @@ namespace Ink_Canvas
                 ClearStrokes(true);
 
                 BorderFloatingBarMainControls.Visibility = Visibility.Visible;
+
+                // 显示浮动工具栏后更新手势按钮的显示状态
+                CheckEnableTwoFingerGestureBtnVisibility(true);
 
                 if (Settings.PowerPointSettings.IsShowCanvasAtNewSlideShow)
                 {
@@ -501,6 +510,12 @@ namespace Ink_Canvas
                 PPTNavigationBottomRight.Visibility = Visibility.Collapsed;
                 PPTNavigationSidesLeft.Visibility = Visibility.Collapsed;
                 PPTNavigationSidesRight.Visibility = Visibility.Collapsed;
+
+                // PPT放映结束时更新手势按钮的显示状态
+                if (BorderFloatingBarMainControls.Visibility == Visibility.Visible)
+                {
+                    CheckEnableTwoFingerGestureBtnVisibility(true);
+                }
 
                 if (currentMode != 0)
                 {

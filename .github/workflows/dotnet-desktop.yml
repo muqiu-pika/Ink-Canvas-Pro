@@ -64,7 +64,7 @@ jobs:
       uses: actions/upload-artifact@main
       with:
         name: Ink Canvas Pro
-        path: Ink Canvas/bin/Release
+        path: Ink Canvas/bin/Any CPU/Release
         
     - name: Upload to artifact (x64)
       uses: actions/upload-artifact@main

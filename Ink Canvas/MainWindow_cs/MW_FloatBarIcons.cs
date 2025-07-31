@@ -68,8 +68,15 @@ namespace Ink_Canvas
             }
             else if (isVisible == true)
             {
-                if (BtnPPTSlideShowEnd.Visibility == Visibility.Visible) EnableTwoFingerGestureBorder.Visibility = Visibility.Collapsed;
-                else EnableTwoFingerGestureBorder.Visibility = Visibility.Visible;
+                // 在批注模式（currentMode == 0）和PPT模式下都显示手势按钮
+                if (currentMode == 0 || BtnPPTSlideShowEnd.Visibility == Visibility.Visible)
+                {
+                    EnableTwoFingerGestureBorder.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    EnableTwoFingerGestureBorder.Visibility = Visibility.Collapsed;
+                }
             }
             else EnableTwoFingerGestureBorder.Visibility = Visibility.Collapsed;
         }
@@ -1053,6 +1060,12 @@ namespace Ink_Canvas
                         Topmost = false;
                         break;
                 }
+            }
+            
+            // 模式切换后更新手势按钮的显示状态
+            if (BorderFloatingBarMainControls.Visibility == Visibility.Visible)
+            {
+                CheckEnableTwoFingerGestureBtnVisibility(true);
             }
         }
 
