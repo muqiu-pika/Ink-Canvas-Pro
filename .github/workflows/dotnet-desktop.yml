@@ -38,19 +38,42 @@ jobs:
       uses: microsoft/setup-msbuild@v1.3.1
 
     # 编译项目 (Release 版本)
-    - name: Build the solution
+    - name: Build Any CPU
       run: |
-        msbuild "Ink Canvas-Pro.sln" -t:restore /p:GitFlow="Github Action"
         msbuild "Ink Canvas/Ink Canvas.csproj" /p:Configuration=Release /p:Platform="Any CPU" /p:GitFlow="Github Action"
+      env:
+        Configuration: ${{ matrix.configuration }}
+    
+    - name: Build x64
+      run: |
+        msbuild "Ink Canvas/Ink Canvas.csproj" /p:Configuration=Release /p:Platform=x64 /p:GitFlow="Github Action"
+      env:
+        Configuration: ${{ matrix.configuration }}
+    
+    - name: Build ARM64
+      run: |
+        msbuild "Ink Canvas/Ink Canvas.csproj" /p:Configuration=Release /p:Platform=ARM64 /p:GitFlow="Github Action"
       env:
         Configuration: ${{ matrix.configuration }}
 
     # 上传编译成品
-    - name: Upload to artifact
+    - name: Upload Any CPU
       uses: actions/upload-artifact@main
       with:
-        name: Ink Canvas Pro
-        path: Ink Canvas/bin/Release
+        name: Ink Canvas Pro (Any CPU)
+        path: Ink Canvas/bin/Any CPU/Release
+        
+    - name: Upload x64
+      uses: actions/upload-artifact@main
+      with:
+        name: Ink Canvas Pro (x64)
+        path: Ink Canvas/bin/x64/Release
+        
+    - name: Upload ARM64
+      uses: actions/upload-artifact@main
+      with:
+        name: Ink Canvas Pro (ARM64)
+        path: Ink Canvas/bin/ARM64/Release
         
     # 安装 Inno Setup
     - name: Install Inno Setup
@@ -61,9 +84,9 @@ jobs:
     # 使用 Inno Setup 打包 (我们已经修改了脚本使用正确的路径)
     - name: Build installers
       run: |
-        iscc "Ink Canvas Pro-x64.iss"
-        iscc "Ink Canvas Pro-ARM64.iss"
-        iscc "Ink Canvas Pro-AnyCPU.iss"
+        iscc ".github\workflows\Ink Canvas Pro-x64.iss"
+        iscc ".github\workflows\Ink Canvas Pro-ARM64.iss"
+        iscc ".github\workflows\Ink Canvas Pro-AnyCPU.iss"
       shell: pwsh
 
     # 上传安装包
@@ -71,4 +94,4 @@ jobs:
       uses: actions/upload-artifact@main
       with:
         name: Ink Canvas Pro Installers
-        path: d:\board\Release\*.exe
+        path: Release\*.exe

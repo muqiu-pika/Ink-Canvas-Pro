@@ -29,10 +29,10 @@ DisableProgramGroupPage=yes
 ; Remove the following line to run in administrative install mode (install for all users.)
 PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
-OutputDir=d:\board\Release
-#define OutputBaseFilename "Ink.Canvas.Pro.V" + MyAppVersion + ".ARM64.Setup"
+OutputDir=..\..\Release
+#define OutputBaseFilename "Ink.Canvas.Pro.V" + MyAppVersion + ".x64.Setup"
 OutputBaseFilename={#OutputBaseFilename}
-SetupIconFile=d:\board\Ink-Canvas-Artistry-master\Ink Canvas\Resources\Ink Canvas Pro.ico
+SetupIconFile=..\..\Ink Canvas\Resources\Ink Canvas Pro.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -47,8 +47,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 //Flags: unchecked
 
 [Files]
-Source: "d:\board\Ink-Canvas-Artistry-master\Ink Canvas\bin\Release\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "d:\board\Ink-Canvas-Artistry-master\Ink Canvas\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\..\Ink Canvas\bin\x64\Release\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\Ink Canvas\bin\x64\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
