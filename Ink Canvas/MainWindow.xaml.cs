@@ -175,16 +175,19 @@ namespace Ink_Canvas
             //加载设置
             LoadSettings(true);
             
-            // 初始化性能管理器
-            try
+            // 异步初始化性能管理器，避免阻塞UI
+            Task.Run(() =>
             {
-                PerformanceManager.Instance.Initialize(Settings.Performance);
-                LogHelper.WriteLogToFile("Performance Manager initialized", LogHelper.LogType.Info);
-            }
-            catch (Exception ex)
-            {
-                LogHelper.WriteLogToFile($"Performance Manager initialization error: {ex}", LogHelper.LogType.Error);
-            }
+                try
+                {
+                    PerformanceManager.Instance.Initialize(Settings.Performance);
+                    LogHelper.WriteLogToFile("Performance Manager initialized", LogHelper.LogType.Info);
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.WriteLogToFile($"Performance Manager initialization error: {ex}", LogHelper.LogType.Error);
+                }
+            });
             
             if (Environment.Is64BitProcess)
             {

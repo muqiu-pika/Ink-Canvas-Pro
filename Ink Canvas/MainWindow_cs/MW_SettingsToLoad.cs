@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using File = System.IO.File;
+using System.Threading.Tasks;
 
 namespace Ink_Canvas
 {
@@ -62,7 +63,11 @@ namespace Ink_Canvas
                 {
                     if (Settings.Automation.AutoDelSavedFiles)
                     {
-                        DelAutoSavedFiles.DeleteFilesOlder(Settings.Automation.AutoSavedStrokesLocation, Settings.Automation.AutoDelSavedFilesDaysThreshold);
+                        // 异步删除旧文件，避免阻塞启动
+                        Task.Run(() =>
+                        {
+                            DelAutoSavedFiles.DeleteFilesOlder(Settings.Automation.AutoSavedStrokesLocation, Settings.Automation.AutoDelSavedFilesDaysThreshold);
+                        });
                     }
                     if (Settings.Startup.IsFoldAtStartup)
                     {
@@ -84,7 +89,11 @@ namespace Ink_Canvas
                 if (Settings.Startup.IsAutoUpdate)
                 {
                     ToggleSwitchIsAutoUpdate.IsOn = true;
-                    AutoUpdate();
+                    // 延迟自动更新检查，避免阻塞启动
+                    Task.Delay(3000).ContinueWith(_ => 
+                    {
+                        Dispatcher.Invoke(() => AutoUpdate());
+                    });
                 }
                 IsAutoUpdateWithSilenceBlock.Visibility = Settings.Startup.IsAutoUpdate ? Visibility.Visible : Visibility.Collapsed;
                 if (Settings.Startup.IsAutoUpdateWithSilence)

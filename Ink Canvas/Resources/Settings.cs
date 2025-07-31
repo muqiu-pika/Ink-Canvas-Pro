@@ -181,7 +181,7 @@ namespace Ink_Canvas
         [JsonProperty("isNotifyAutoPlayPresentation")]
         public bool IsNotifyAutoPlayPresentation { get; set; } = true;
         [JsonProperty("isEnableTwoFingerGestureInPresentationMode")]
-        public bool IsEnableTwoFingerGestureInPresentationMode { get; set; } = false;
+        public bool IsEnableTwoFingerGestureInPresentationMode { get; set; } = true;
         [JsonProperty("isEnableFingerGestureSlideShowControl")]
         public bool IsEnableFingerGestureSlideShowControl { get; set; } = true;
         [JsonProperty("isSupportWPS")]

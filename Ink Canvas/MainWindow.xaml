@@ -6980,12 +6980,13 @@
                                 Glyph="&#xf271;"
                                 Opacity="0.5" />
                             <TextBlock
+                                x:Name="FloatBarGestureIconTextBlock"
                                 Margin="0,-2,0,-1"
                                 FontSize="8"
                                 Foreground="{DynamicResource FloatBarForeground}"
                                 Text="手势"
                                 TextAlignment="Center"
-                                Visibility="Visible" />
+                                Visibility="{Binding ElementName=FloatBarSelectIconTextBlock, Path=Visibility}" />
                         </ikw:SimpleStackPanel>
                     </Button>
                 </Border>

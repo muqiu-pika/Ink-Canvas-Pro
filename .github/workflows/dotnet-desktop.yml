@@ -37,7 +37,7 @@ jobs:
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.3.1
 
-    # 编译整个项目
+    # 编译项目 (Release 版本)
     - name: Build the solution
       run: |
         msbuild "Ink Canvas-Pro.sln" -t:restore /p:GitFlow="Github Action"
@@ -45,35 +45,30 @@ jobs:
       env:
         Configuration: ${{ matrix.configuration }}
 
-    - name: Build the solution (x64)
-      run: |
-        msbuild "Ink Canvas-Pro.sln" -t:restore /p:GitFlow="Github Action"
-        msbuild "Ink Canvas/Ink Canvas.csproj" /p:Configuration=Release /p:Platform="x64" /p:GitFlow="Github Action"
-      env:
-        Configuration: ${{ matrix.configuration }}
-
-    - name: Build the solution (ARM64)
-      run: |
-        msbuild "Ink Canvas-Pro.sln" -t:restore /p:GitFlow="Github Action"
-        msbuild "Ink Canvas/Ink Canvas.csproj" /p:Configuration=Release /p:Platform="ARM64" /p:GitFlow="Github Action"
-      env:
-        Configuration: ${{ matrix.configuration }}
-        
     # 上传编译成品
     - name: Upload to artifact
       uses: actions/upload-artifact@main
       with:
         name: Ink Canvas Pro
-        path: Ink Canvas/bin/Any CPU/Release
+        path: Ink Canvas/bin/Release
         
-    - name: Upload to artifact (x64)
+    # 安装 Inno Setup
+    - name: Install Inno Setup
+      run: |
+        choco install innosetup -y
+      shell: pwsh
+
+    # 使用 Inno Setup 打包 (我们已经修改了脚本使用正确的路径)
+    - name: Build installers
+      run: |
+        iscc "Ink Canvas Pro-x64.iss"
+        iscc "Ink Canvas Pro-ARM64.iss"
+        iscc "Ink Canvas Pro-AnyCPU.iss"
+      shell: pwsh
+
+    # 上传安装包
+    - name: Upload installers
       uses: actions/upload-artifact@main
       with:
-        name: Ink Canvas Pro (x64)
-        path: Ink Canvas/bin/x64/Release
-        
-    - name: Upload to artifact (ARM64)
-      uses: actions/upload-artifact@main
-      with:
-        name: Ink Canvas Pro (ARM64)
-        path: Ink Canvas/bin/ARM64/Release
+        name: Ink Canvas Pro Installers
+        path: d:\board\Release\*.exe
