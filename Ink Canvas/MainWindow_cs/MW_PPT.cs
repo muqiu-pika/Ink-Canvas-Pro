@@ -83,7 +83,7 @@ namespace Ink_Canvas
             SaveSettingsToFile();
         }
 
-        public static bool isWPSSupportOn => Settings.PowerPointSettings.IsSupportWPS;
+        public static bool IsWPSSupportOn => Settings.PowerPointSettings.IsSupportWPS;
 
         public static bool IsShowingRestoreHiddenSlidesWindow = false;
 
@@ -92,7 +92,7 @@ namespace Ink_Canvas
             if (IsShowingRestoreHiddenSlidesWindow) return;
             try
             {
-                if (!isWPSSupportOn && Process.GetProcessesByName("wpp").Length > 0)
+                if (!IsWPSSupportOn && Process.GetProcessesByName("wpp").Length > 0)
                 {
                     return;
                 }

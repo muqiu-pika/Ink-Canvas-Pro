@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
+using Ink_Canvas.Helpers;
 
 namespace Ink_Canvas.Helpers
 {
@@ -62,14 +63,21 @@ namespace Ink_Canvas.Helpers
         /// <param name="point"></param>
         public void Add(StylusPoint point)
         {
-            if (Stroke == null)
+            try
             {
-                var collection = new StylusPointCollection { point };
-                Stroke = new Stroke(collection) { DrawingAttributes = _drawingAttributes };
+                if (Stroke == null)
+                {
+                    var collection = new StylusPointCollection { point };
+                    Stroke = new Stroke(collection) { DrawingAttributes = _drawingAttributes };
+                }
+                else
+                {
+                    Stroke.StylusPoints.Add(point);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Stroke.StylusPoints.Add(point);
+                LogHelper.WriteLogToFile($"StrokeVisual Add error: {ex}", LogHelper.LogType.Error);
             }
         }
 
@@ -80,12 +88,18 @@ namespace Ink_Canvas.Helpers
         {
             try
             {
-                using (var dc = RenderOpen())
+                if (Stroke != null && Stroke.StylusPoints.Count > 0)
                 {
-                    Stroke.Draw(dc);
+                    using (var dc = RenderOpen())
+                    {
+                        Stroke.Draw(dc);
+                    }
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLogToFile($"StrokeVisual Redraw error: {ex}", LogHelper.LogType.Error);
+            }
         }
 
         private readonly DrawingAttributes _drawingAttributes;

@@ -1,12 +1,16 @@
 using Ink_Canvas.Helpers;
+using iNKORE.UI.WPF.Modern.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
+using MessageBox = System.Windows.MessageBox;
 using Point = System.Windows.Point;
 
 namespace Ink_Canvas
@@ -43,8 +47,8 @@ namespace Ink_Canvas
                             var bounds = LineRecognitionHelper.GetStrokeBounds(e.Stroke);
                             if (bounds.Width > 0 && bounds.Height > 0)
                             {
-                                var startPoint = new Point(e.Stroke.StylusPoints.First().X, e.Stroke.StylusPoints.First().Y);
-                                var endPoint = new Point(e.Stroke.StylusPoints.Last().X, e.Stroke.StylusPoints.Last().Y);
+                                var startPoint = new Point(e.Stroke.StylusPoints[0].X, e.Stroke.StylusPoints[0].Y);
+                                var endPoint = new Point(e.Stroke.StylusPoints[e.Stroke.StylusPoints.Count - 1].X, e.Stroke.StylusPoints[e.Stroke.StylusPoints.Count - 1].Y);
                                 
                                 var lineStroke = LineRecognitionHelper.CreateLineStroke(startPoint, endPoint, inkCanvas.DefaultDrawingAttributes);
                                 
@@ -295,7 +299,7 @@ namespace Ink_Canvas
 
                                     if (needRotation)
                                     {
-                                        Matrix m = new Matrix();
+                                        System.Windows.Media.Matrix m = new System.Windows.Media.Matrix();
                                         FrameworkElement fe = e.Source as FrameworkElement;
                                         double tanTheta = (p[2].Y - p[0].Y) / (p[2].X - p[0].X);
                                         double theta = Math.Atan(tanTheta);
@@ -338,7 +342,7 @@ namespace Ink_Canvas
                                     p[1] = newPoints[0];
                                     p[2] = newPoints[1];
 
-                                    var pointList = p.ToList();
+                                    var pointList = new List<Point>(p);
                                     //pointList.Add(p[0]);
                                     var point = new StylusPointCollection(pointList);
                                     var stroke = new Stroke(GenerateFakePressureTriangle(point))
@@ -386,7 +390,7 @@ namespace Ink_Canvas
                                     p[3] = newPoints[0];
                                     p[0] = newPoints[1];
 
-                                    var pointList = p.ToList();
+                                    var pointList = new List<Point>(p);
                                     pointList.Add(p[0]);
                                     var point = new StylusPointCollection(pointList);
                                     var stroke = new Stroke(GenerateFakePressureRectangle(point))
@@ -601,7 +605,20 @@ namespace Ink_Canvas
 
         public double GetDistance(Point point1, Point point2)
         {
-            return Math.Sqrt((point1.X - point2.X) * (point1.X - point2.X) + (point1.Y - point2.Y) * (point1.Y - point2.Y));
+            try
+            {
+                if (point1 == null || point2 == null)
+                {
+                    return 0.0;
+                }
+                
+                return Math.Sqrt((point1.X - point2.X) * (point1.X - point2.X) + (point1.Y - point2.Y) * (point1.Y - point2.Y));
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLogToFile($"GetDistance error: {ex}", LogHelper.LogType.Error);
+                return 0.0;
+            }
         }
 
         public double GetPointSpeed(Point point1, Point point2, Point point3)

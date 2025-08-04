@@ -56,8 +56,11 @@ namespace Ink_Canvas.Helpers
         {
             lock (_lockObject)
             {
-                matrix.SetIdentity();
-                _matrixPool.Push(matrix);
+                if (_matrixPool.Count < 100) // 限制对象池大小
+                {
+                    matrix.SetIdentity();
+                    _matrixPool.Push(matrix);
+                }
             }
         }
 
@@ -79,8 +82,10 @@ namespace Ink_Canvas.Helpers
         {
             lock (_lockObject)
             {
-                vector = new Vector();
-                _vectorPool.Push(vector);
+                if (_vectorPool.Count < 100) // 限制对象池大小
+                {
+                    _vectorPool.Push(new Vector());
+                }
             }
         }
 
@@ -131,12 +136,19 @@ namespace Ink_Canvas.Helpers
 
             BeginPerformanceMonitoring();
 
-            foreach (var stroke in _dirtyStrokes)
+            try
             {
-                if (_pendingStrokeTransforms.TryGetValue(stroke, out var transform))
+                foreach (var stroke in _dirtyStrokes)
                 {
-                    stroke.Transform(transform, false);
+                    if (stroke != null && _pendingStrokeTransforms.TryGetValue(stroke, out var transform))
+                    {
+                        stroke.Transform(transform, false);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLogToFile($"Batch transform error: {ex}", LogHelper.LogType.Error);
             }
 
             EndPerformanceMonitoring(_dirtyStrokes.Count, "BatchTransform");

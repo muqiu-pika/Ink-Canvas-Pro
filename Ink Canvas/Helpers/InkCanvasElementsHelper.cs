@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Ink_Canvas.Helpers;
 
 namespace Ink_Canvas.Helpers
 {
@@ -10,8 +11,24 @@ namespace Ink_Canvas.Helpers
     {
         public static Point GetAllElementsBoundsCenterPoint(InkCanvas inkCanvas)
         {
-            Rect bounds = inkCanvas.GetSelectionBounds();
-            return new Point(bounds.Left + bounds.Width / 2, bounds.Top + bounds.Height / 2);
+            try
+            {
+                if (inkCanvas == null) return new Point(0, 0);
+                
+                Rect bounds = inkCanvas.GetSelectionBounds();
+                if (bounds.IsEmpty || bounds.Width <= 0 || bounds.Height <= 0)
+                {
+                    // 如果没有选择内容，返回画布中心点
+                    return new Point(inkCanvas.ActualWidth / 2, inkCanvas.ActualHeight / 2);
+                }
+                
+                return new Point(bounds.Left + bounds.Width / 2, bounds.Top + bounds.Height / 2);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLogToFile($"GetAllElementsBoundsCenterPoint error: {ex}", LogHelper.LogType.Error);
+                return new Point(0, 0);
+            }
         }
 
         public static bool IsNotCanvasElementSelected(InkCanvas inkCanvas)

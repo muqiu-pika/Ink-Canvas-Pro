@@ -1486,105 +1486,113 @@ namespace Ink_Canvas
 
         private void inkCanvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (drawingShapeMode == 5)
+            try
             {
-                Circle circle = new Circle(new Point(), 0, lastTempStroke);
-                circle.R = GetDistance(circle.Stroke.StylusPoints[0].ToPoint(), circle.Stroke.StylusPoints[circle.Stroke.StylusPoints.Count / 2].ToPoint()) / 2;
-                circle.Centroid = new Point((circle.Stroke.StylusPoints[0].X + circle.Stroke.StylusPoints[circle.Stroke.StylusPoints.Count / 2].X) / 2,
-                                            (circle.Stroke.StylusPoints[0].Y + circle.Stroke.StylusPoints[circle.Stroke.StylusPoints.Count / 2].Y) / 2);
-                circles.Add(circle);
-                if (lastIsInMultiTouchMode)
+                if (drawingShapeMode == 5)
                 {
-                    ToggleSwitchEnableMultiTouchMode.IsOn = true;
-                    lastIsInMultiTouchMode = false;
-                }
-            }
-            if (drawingShapeMode != 9 && drawingShapeMode != 0 && drawingShapeMode != 24 && drawingShapeMode != 25)
-            {
-                if (isLongPressSelected)
-                {
-
-                }
-                else
-                {
-                    BtnPen_Click(null, null); //画完一次还原到笔模式
-
-                    if (lastIsInMultiTouchMode)
+                    if (lastTempStroke != null && lastTempStroke.StylusPoints.Count > 1)
                     {
-                        ToggleSwitchEnableMultiTouchMode.IsOn = true;
-                        lastIsInMultiTouchMode = false;
-                    }
-                }
-            }
-            if (drawingShapeMode == 9)
-            {
-                if (isFirstTouchCuboid)
-                {
-                    if (CuboidStrokeCollection == null) CuboidStrokeCollection = new StrokeCollection();
-                    isFirstTouchCuboid = false;
-                    Point newIniP = new Point(Math.Min(CuboidFrontRectIniP.X, CuboidFrontRectEndP.X), Math.Min(CuboidFrontRectIniP.Y, CuboidFrontRectEndP.Y));
-                    Point newEndP = new Point(Math.Max(CuboidFrontRectIniP.X, CuboidFrontRectEndP.X), Math.Max(CuboidFrontRectIniP.Y, CuboidFrontRectEndP.Y));
-                    CuboidFrontRectIniP = newIniP;
-                    CuboidFrontRectEndP = newEndP;
-                    CuboidStrokeCollection.Add(lastTempStrokeCollection);
-                }
-                else
-                {
-                    BtnPen_Click(null, null); //画完还原到笔模式
-
-                    if (lastIsInMultiTouchMode)
-                    {
-                        ToggleSwitchEnableMultiTouchMode.IsOn = true;
-                        lastIsInMultiTouchMode = false;
-                    }
-
-                    if (_currentCommitType == CommitReason.ShapeDrawing)
-                    {
-                        CuboidStrokeCollection.Add(lastTempStrokeCollection);
-                        _currentCommitType = CommitReason.UserInput;
-                        timeMachine.CommitStrokeUserInputHistory(CuboidStrokeCollection);
-                        CuboidStrokeCollection = null;
-                    }
-                }
-            }
-            if (drawingShapeMode == 24 || drawingShapeMode == 25)
-            {
-                if (drawMultiStepShapeCurrentStep == 0)
-                {
-                    drawMultiStepShapeCurrentStep = 1;
-                }
-                else
-                {
-                    drawMultiStepShapeCurrentStep = 0;
-                    if (drawMultiStepShapeSpecialStrokeCollection != null)
-                    {
-                        bool opFlag = false;
-                        switch (Settings.Canvas.HyperbolaAsymptoteOption)
+                        Circle circle = new Circle(new Point(), 0, lastTempStroke);
+                        circle.R = GetDistance(circle.Stroke.StylusPoints[0].ToPoint(), circle.Stroke.StylusPoints[circle.Stroke.StylusPoints.Count / 2].ToPoint()) / 2;
+                        circle.Centroid = new Point((circle.Stroke.StylusPoints[0].X + circle.Stroke.StylusPoints[circle.Stroke.StylusPoints.Count / 2].X) / 2,
+                                                    (circle.Stroke.StylusPoints[0].Y + circle.Stroke.StylusPoints[circle.Stroke.StylusPoints.Count / 2].Y) / 2);
+                        
+                        if (circles != null)
                         {
-                            case OptionalOperation.Yes:
-                                opFlag = true;
-                                break;
-                            case OptionalOperation.No:
-                                opFlag = false;
-                                break;
-                            case OptionalOperation.Ask:
-                                opFlag = MessageBox.Show("是否移除渐近线？", "Ink Canvas", MessageBoxButton.YesNo) != MessageBoxResult.Yes;
-                                break;
-                        };
-                        if (!opFlag)
+                            circles.Add(circle);
+                        }
+                        
+                        if (lastIsInMultiTouchMode)
                         {
-                            inkCanvas.Strokes.Remove(drawMultiStepShapeSpecialStrokeCollection);
+                            ToggleSwitchEnableMultiTouchMode.IsOn = true;
+                            lastIsInMultiTouchMode = false;
                         }
                     }
-                    BtnPen_Click(null, null); //画完还原到笔模式
-
-                    if (lastIsInMultiTouchMode)
-                    {
-                        ToggleSwitchEnableMultiTouchMode.IsOn = true;
-                        lastIsInMultiTouchMode = false;
-                    }
-
                 }
+                if (drawingShapeMode != 9 && drawingShapeMode != 0 && drawingShapeMode != 24 && drawingShapeMode != 25)
+                {
+                    if (isLongPressSelected)
+                    {
+
+                    }
+                    else
+                    {
+                        BtnPen_Click(null, null); //画完一次还原到笔模式
+
+                        if (lastIsInMultiTouchMode)
+                        {
+                            ToggleSwitchEnableMultiTouchMode.IsOn = true;
+                            lastIsInMultiTouchMode = false;
+                        }
+                    }
+                }
+                if (drawingShapeMode == 9)
+                {
+                    if (isFirstTouchCuboid)
+                    {
+                        if (CuboidStrokeCollection == null) CuboidStrokeCollection = new StrokeCollection();
+                        isFirstTouchCuboid = false;
+                        Point newIniP = new Point(Math.Min(CuboidFrontRectIniP.X, CuboidFrontRectEndP.X), Math.Min(CuboidFrontRectIniP.Y, CuboidFrontRectEndP.Y));
+                        Point newEndP = new Point(Math.Max(CuboidFrontRectIniP.X, CuboidFrontRectEndP.X), Math.Max(CuboidFrontRectIniP.Y, CuboidFrontRectEndP.Y));
+                        CuboidFrontRectIniP = newIniP;
+                        CuboidFrontRectEndP = newEndP;
+                        CuboidStrokeCollection.Add(lastTempStrokeCollection);
+                    }
+                    else
+                    {
+                        BtnPen_Click(null, null); //画完还原到笔模式
+
+                        if (lastIsInMultiTouchMode)
+                        {
+                            ToggleSwitchEnableMultiTouchMode.IsOn = true;
+                            lastIsInMultiTouchMode = false;
+                        }
+
+                        if (_currentCommitType == CommitReason.ShapeDrawing)
+                        {
+                            CuboidStrokeCollection.Add(lastTempStrokeCollection);
+                            _currentCommitType = CommitReason.UserInput;
+                            timeMachine.CommitStrokeUserInputHistory(CuboidStrokeCollection);
+                            CuboidStrokeCollection = null;
+                        }
+                    }
+                }
+                if (drawingShapeMode == 24 || drawingShapeMode == 25)
+                {
+                    if (drawMultiStepShapeCurrentStep == 0)
+                    {
+                        drawMultiStepShapeCurrentStep = 1;
+                    }
+                    else
+                    {
+                        drawMultiStepShapeCurrentStep = 0;
+                        if (drawMultiStepShapeSpecialStrokeCollection != null)
+                        {
+                            bool opFlag = false;
+                            switch (Settings.Canvas.HyperbolaAsymptoteOption)
+                            {
+                                case OptionalOperation.Yes:
+                                    opFlag = true;
+                                    break;
+                                case OptionalOperation.No:
+                                    opFlag = false;
+                                    break;
+                                case OptionalOperation.Ask:
+                                    opFlag = MessageBox.Show("是否移除渐近线？", "Ink Canvas", MessageBoxButton.YesNo) != MessageBoxResult.Yes;
+                                    break;
+                            };
+                            if (!opFlag)
+                            {
+                                inkCanvas.Strokes.Remove(drawMultiStepShapeSpecialStrokeCollection);
+                            }
+                        }
+                        BtnPen_Click(null, null); //画完还原到笔模式
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLogToFile($"Mouse up error: {ex}", LogHelper.LogType.Error);
             }
             isMouseDown = false;
             if (ReplacedStroke != null || AddedStroke != null)
