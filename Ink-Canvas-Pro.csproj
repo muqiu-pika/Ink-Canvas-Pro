@@ -19,6 +19,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
@@ -28,6 +29,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>Ink_Canvas_Pro</RootNamespace>
@@ -321,6 +323,9 @@
     <Compile Include="Ink Canvas\Helpers\SoftwareLauncher.cs" />
     <Compile Include="Ink Canvas\Helpers\TimeMachine.cs" />
     <Compile Include="Ink Canvas\Helpers\WinTabWindowsChecker.cs" />
+    <Compile Include="Ink Canvas\Helpers\PptHelper.cs" />
+    <Compile Include="Ink Canvas\Helpers\PptTestHelper.cs" />
+    <Compile Include="Ink Canvas\PptCOM\PptCOMServer.cs" />
     <Compile Include="Ink Canvas\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>

@@ -37,34 +37,42 @@
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 	  <Prefer32Bit>True</Prefer32Bit>
 	  <PlatformTarget>x86</PlatformTarget>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	  <Prefer32Bit>True</Prefer32Bit>
 	  <PlatformTarget>x86</PlatformTarget>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
 	  <Prefer32Bit>True</Prefer32Bit>
 	  <PlatformTarget>x86</PlatformTarget>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
 	  <Prefer32Bit>True</Prefer32Bit>
 	  <PlatformTarget>x86</PlatformTarget>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
 	  <Prefer32Bit>True</Prefer32Bit>
 	  <PlatformTarget>x86</PlatformTarget>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
 	  <Prefer32Bit>True</Prefer32Bit>
 	  <PlatformTarget>x86</PlatformTarget>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
 	  <Prefer32Bit>True</Prefer32Bit>
 	  <PlatformTarget>x86</PlatformTarget>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
 	  <Prefer32Bit>True</Prefer32Bit>
 	  <PlatformTarget>x86</PlatformTarget>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<ItemGroup>
 		<Reference Include="IACore">
