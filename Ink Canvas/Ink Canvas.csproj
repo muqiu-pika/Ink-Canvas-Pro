@@ -12,6 +12,7 @@
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<ApplicationIcon>Resources\Ink Canvas Pro.ico</ApplicationIcon>
 		<PlatformTarget>x86</PlatformTarget>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<PropertyGroup>
 		<IsWebBootstrapper>false</IsWebBootstrapper>
@@ -31,8 +32,8 @@
 		<BootstrapperEnabled>false</BootstrapperEnabled>
 		<Platforms>AnyCPU;x86;x64;ARM64</Platforms>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
-		<PlatformTarget>AnyCPU</PlatformTarget>
 		<UserSecretsId>f49ced3b-26c5-4244-91af-88faafb1a4e5</UserSecretsId>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 	  <Prefer32Bit>True</Prefer32Bit>

@@ -40,19 +40,19 @@ jobs:
     # 编译项目 (Release 版本)
     - name: Build Any CPU
       run: |
-        msbuild "Ink Canvas/Ink Canvas.csproj" /p:Configuration=Release /p:Platform="Any CPU" /p:GitFlow="Github Action"
+        msbuild "Ink Canvas/Ink Canvas.csproj" /p:Configuration=Release /p:Platform="Any CPU" /p:GitFlow="Github Action" /p:AllowUnsafeBlocks=true
       env:
         Configuration: ${{ matrix.configuration }}
     
     - name: Build x64
       run: |
-        msbuild "Ink Canvas/Ink Canvas.csproj" /p:Configuration=Release /p:Platform=x64 /p:GitFlow="Github Action"
+        msbuild "Ink Canvas/Ink Canvas.csproj" /p:Configuration=Release /p:Platform=x64 /p:GitFlow="Github Action" /p:AllowUnsafeBlocks=true
       env:
         Configuration: ${{ matrix.configuration }}
     
     - name: Build ARM64
       run: |
-        msbuild "Ink Canvas/Ink Canvas.csproj" /p:Configuration=Release /p:Platform=ARM64 /p:GitFlow="Github Action"
+        msbuild "Ink Canvas/Ink Canvas.csproj" /p:Configuration=Release /p:Platform=ARM64 /p:GitFlow="Github Action" /p:AllowUnsafeBlocks=true
       env:
         Configuration: ${{ matrix.configuration }}
 
